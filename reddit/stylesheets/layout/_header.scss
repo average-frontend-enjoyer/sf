@@ -1,0 +1,19 @@
+@use '../abstracts' as *;
+
+.header {
+    background: url('../imgs/header/header.jpg');
+    height: 200px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-y: -100px;
+    position: relative;
+    z-index: 2;
+    @media (max-width: map-get($container-max-widths, lg)) {
+        background-position-y: -50px;
+        height: 150px;
+    }
+    @media (max-width: map-get($container-max-widths, md)) {
+        background-position-y: 0px;
+        height: 100px;
+    }
+}
