@@ -1,6 +1,26 @@
 version: '3'
 
 services:
+  swfx-nginx:
+    image: nginx:latest
+    container_name: swfx-nginx
+    user: root
+    volumes:
+      - ../../main:/etc/www/main
+      - ../../ai:/etc/www/ai
+      - ../../ph:/etc/www/ph
+      - ../../twitter:/etc/www/twitter
+      - ../../reddit:/etc/www/reddit
+      - ../../tg:/etc/www/tg
+      - ../../links:/etc/www/links
+      - ../../inst:/etc/www/inst
+      - ../../swfx:/etc/www/swfx
+      - ../../nginx:/etc/nginx
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - backend_strapi
   nextjs:
     container_name: sf-frontend
     build:
@@ -8,7 +28,7 @@ services:
       dockerfile: Dockerfile
     restart: always
     ports:
-      - "3000:3000"
+      - "127.0.0.1:3000:3000"
     networks:
       - backend_strapi
 
