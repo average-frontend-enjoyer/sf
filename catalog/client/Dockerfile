@@ -17,6 +17,7 @@ COPY public ./public
 COPY --chown=nextjs:nodejs .next/standalone ./
 COPY --chown=nextjs:nodejs .next/static ./.next/static
 COPY --chown=nextjs:nodejs .env ./.env
+COPY --chown=nextjs:nodejs next.config.js ./
 
 # Environment variables must be redefined at run time
 ARG ENV_VARIABLE
