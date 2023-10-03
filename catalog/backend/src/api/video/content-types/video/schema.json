@@ -46,10 +46,14 @@
       "type": "string"
     },
     "price": {
-      "type": "decimal"
+      "type": "decimal",
+      "required": false,
+      "default": 0
     },
     "discountedPrice": {
-      "type": "decimal"
+      "type": "decimal",
+      "required": false,
+      "default": 0
     },
     "link": {
       "type": "string",
