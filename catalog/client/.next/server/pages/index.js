@@ -609,33 +609,12 @@ var components_button = __webpack_require__(3305);
 
 
 
-
 function useCardButton(data) {
     return (0,external_react_.useMemo)(()=>{
-        const { price , discountedPrice , link  } = data;
-        const priceData = /*#__PURE__*/ (0,jsx_runtime_.jsxs)(jsx_runtime_.Fragment, {
-            children: [
-                "Buy Now For",
-                discountedPrice ? /*#__PURE__*/ (0,jsx_runtime_.jsxs)(jsx_runtime_.Fragment, {
-                    children: [
-                        "\xa0",
-                        /*#__PURE__*/ jsx_runtime_.jsx("s", {
-                            children: `$${price}`
-                        }),
-                        "\xa0",
-                        `$${discountedPrice}`
-                    ]
-                }) : /*#__PURE__*/ (0,jsx_runtime_.jsxs)(jsx_runtime_.Fragment, {
-                    children: [
-                        "\xa0",
-                        `$${price}`
-                    ]
-                })
-            ]
-        });
+        const { link  } = data;
         return /*#__PURE__*/ (0,external_react_.createElement)(components_button/* CustomButton */.o, {
             type: "primary",
-            text: priceData,
+            text: "CLICK TO BUY",
             link,
             className: card_module.button,
             isNewTab: true
