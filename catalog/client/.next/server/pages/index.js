@@ -143,7 +143,8 @@ const mapStrapiVideoCollectionResponseToContent = ({ data  })=>{
                     link: attributes.link,
                     messageId: attributes.messageId,
                     price: attributes.price,
-                    discountedPrice: attributes.discountedPrice
+                    discountedPrice: attributes.discountedPrice,
+                    order: attributes.order
                 });
                 return acc;
             }
@@ -160,7 +161,8 @@ const mapStrapiVideoCollectionResponseToContent = ({ data  })=>{
                         messageId: attributes.messageId,
                         link: attributes.link,
                         price: attributes.price,
-                        discountedPrice: attributes.discountedPrice
+                        discountedPrice: attributes.discountedPrice,
+                        order: attributes.order
                     }
                 ]
             });
@@ -227,7 +229,6 @@ var button_styles = __webpack_require__(8287);
 const Button = ({ type , isSelected , text , action , link , className , isNewTab  })=>{
     return /*#__PURE__*/ jsx_runtime_.jsx(jsx_runtime_.Fragment, {
         children: /*#__PURE__*/ jsx_runtime_.jsx("button", {
-            //TODO: Add External Link Support
             className: external_classnames_default()("button", {
                 "button_selected": isSelected,
                 "button_primary": type === "primary",
@@ -505,7 +506,7 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var _ui_features_category_utils_format__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4796);
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(9003);
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _hooks_use_cards__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(2499);
+/* harmony import */ var _hooks_use_cards__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(9225);
 /* harmony import */ var _hooks_use_swiper_breakpoints__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(3085);
 /* harmony import */ var _hooks_use_view_switcher__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(2885);
 /* harmony import */ var _category_styles_scss__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(6975);
@@ -573,7 +574,7 @@ __webpack_async_result__();
 
 /***/ }),
 
-/***/ 2499:
+/***/ 9225:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -609,18 +610,17 @@ var components_button = __webpack_require__(3305);
 
 
 
-function useCardButton(data) {
+function useCardButton({ link  }) {
     return (0,external_react_.useMemo)(()=>{
-        const { link  } = data;
         return /*#__PURE__*/ (0,external_react_.createElement)(components_button/* CustomButton */.o, {
             type: "primary",
-            text: "CLICK TO BUY",
+            text: "click to buy",
             link,
             className: card_module.button,
             isNewTab: true
         });
     }, [
-        JSON.stringify(data)
+        link
     ]);
 }
 
@@ -754,12 +754,24 @@ const Card = ({ preview: { thumbnail , src , duration  } , title , description ,
     });
 };
 
+;// CONCATENATED MODULE: ./src/main/ui/features/category/__card/index.ts
+
+
+;// CONCATENATED MODULE: ./src/main/ui/features/category/utils/sort.ts
+const sort = {
+    byOrder: (orderA, orderB)=>orderA - orderB
+};
+
 ;// CONCATENATED MODULE: ./src/main/ui/features/category/hooks/use-cards.ts
+
 
 
 function useCards(isExpandedView, content) {
     return (0,external_react_.useMemo)(()=>{
-        return content.map((contentCard, index)=>{
+        const sortedContent = content.sort(({ order: orderA  }, { order: orderB  })=>{
+            return sort.byOrder(orderA, orderB);
+        });
+        return sortedContent.map((contentCard, index)=>{
             const key = contentCard.messageId + index;
             return (0,external_react_.createElement)(Card, {
                 ...contentCard,
@@ -822,9 +834,7 @@ function tablet() {
 function useViewSwitcher() {
     const [isExpandedView, setIsExpandedView] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
     const [showExpandButton, setShowExpandButton] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
-    const toggleView = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(()=>{
-        setIsExpandedView((isExpanded)=>!isExpanded);
-    }, []);
+    const toggleView = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(()=>setIsExpandedView((isExpanded)=>!isExpanded), []);
     const forceExpandedView = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)((swiper)=>{
         if (swiper.isBeginning && !swiper.allowSlideNext) {
             setShowExpandButton(false);
