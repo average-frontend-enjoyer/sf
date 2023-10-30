@@ -128,6 +128,7 @@ const extractMediaUrl = ({ data  })=>{
     const mediaData = Array.isArray(data) ? data[0] : data;
     return normalizeMediaUrl(mediaData.attributes.url);
 };
+const extractTagNames = (tags)=>tags.map(({ name  })=>name);
 const mapStrapiVideoCollectionResponseToContent = ({ data  })=>{
     return data.reduce((acc, { attributes  })=>{
         attributes.tags.forEach(({ name  })=>{
@@ -144,6 +145,7 @@ const mapStrapiVideoCollectionResponseToContent = ({ data  })=>{
                     messageId: attributes.messageId,
                     price: attributes.price,
                     discountedPrice: attributes.discountedPrice,
+                    tags: extractTagNames(attributes.tags),
                     order: attributes.order
                 });
                 return acc;
@@ -162,6 +164,7 @@ const mapStrapiVideoCollectionResponseToContent = ({ data  })=>{
                         link: attributes.link,
                         price: attributes.price,
                         discountedPrice: attributes.discountedPrice,
+                        tags: extractTagNames(attributes.tags),
                         order: attributes.order
                     }
                 ]
@@ -522,10 +525,10 @@ _ui_components_card_swiper__WEBPACK_IMPORTED_MODULE_2__ = (__webpack_async_depen
 
 
 
-const Category = ({ title , content  })=>{
+const Category = ({ tag , content  })=>{
     const breakpoints = (0,_hooks_use_swiper_breakpoints__WEBPACK_IMPORTED_MODULE_8__/* .useSwiperBreakpoints */ ._)();
     const { isExpandedView , toggleView , forceExpandedView , showExpandButton  } = (0,_hooks_use_view_switcher__WEBPACK_IMPORTED_MODULE_6__/* .useViewSwitcher */ .p)();
-    const contentCards = (0,_hooks_use_cards__WEBPACK_IMPORTED_MODULE_5__/* .useCards */ .K)(isExpandedView, content);
+    const contentCards = (0,_hooks_use_cards__WEBPACK_IMPORTED_MODULE_5__/* .useCards */ .K)(tag, isExpandedView, content);
     if (!content.length) return null;
     return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("section", {
         className: "category",
@@ -535,7 +538,7 @@ const Category = ({ title , content  })=>{
                 children: [
                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h2", {
                         className: "category__title",
-                        children: title
+                        children: tag
                     }),
                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
                         className: "category__badge",
@@ -560,7 +563,7 @@ const Category = ({ title , content  })=>{
                 }) : contentCards
             }),
             showExpandButton && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_ui_components_button__WEBPACK_IMPORTED_MODULE_1__/* .CustomButton */ .o, {
-                text: `${isExpandedView ? "Collapse" : "Show All"} ${title}`,
+                text: `${isExpandedView ? "Collapse" : "Show All"} ${tag}`,
                 type: "secondary",
                 className: "category__button",
                 action: toggleView
@@ -759,18 +762,20 @@ const Card = ({ preview: { thumbnail , src , duration  } , title , description ,
 
 ;// CONCATENATED MODULE: ./src/main/ui/features/category/utils/sort.ts
 const sort = {
-    byOrder: (orderA, orderB)=>orderA - orderB
+    byOrder: ({ tags: tagsA , order: orderA  }, { tags: tagsB , order: orderB  }, tag)=>{
+        const orderNumberA = orderA[tagsA.indexOf(tag)] ?? 0;
+        const orderNumberB = orderB[tagsB.indexOf(tag)] ?? 0;
+        return orderNumberA - orderNumberB;
+    }
 };
 
 ;// CONCATENATED MODULE: ./src/main/ui/features/category/hooks/use-cards.ts
 
 
 
-function useCards(isExpandedView, content) {
+function useCards(tag, isExpandedView, content) {
     return (0,external_react_.useMemo)(()=>{
-        const sortedContent = content.sort(({ order: orderA  }, { order: orderB  })=>{
-            return sort.byOrder(orderA, orderB);
-        });
+        const sortedContent = content.sort((...cards)=>sort.byOrder(...cards, tag));
         return sortedContent.map((contentCard, index)=>{
             const key = contentCard.messageId + index;
             return (0,external_react_.createElement)(Card, {
@@ -1120,7 +1125,7 @@ function useMainContent() {
     }).reduce((categories, [tag, content], index)=>{
         if (!selectedTags.length || selectedTags.includes(tag)) {
             const category = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_ui_features_category__WEBPACK_IMPORTED_MODULE_1__/* .Category */ .W, {
-                title: tag,
+                tag,
                 content,
                 key: tag + index
             });
