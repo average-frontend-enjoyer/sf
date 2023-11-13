@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@200;300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600&display=swap');
 @keyframes pulse {
   0% {
     transform: scale(1);
@@ -20,6 +21,7 @@
   margin: 0;
   padding: 0;
   font-family: 'Inter Tight', sans-serif;
+  text-decoration: none;
 }
 body {
   background: url('./img/1.jpg');
@@ -84,6 +86,55 @@ body {
 .button-18 img{
   display: none;
 }
+
+ul {
+  position: absolute;
+  top: 70%;
+  left: 80%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+}
+li{
+  font-family: 'Nunito', sans-serif;
+  font-style: bold;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  border-radius: 100px;
+  margin: 10px;
+  width: 316px;
+  height: 99px;
+  color: rgb(0, 0, 0);
+  animation: pulse 1.2s infinite;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2) inset;
+  transition: 0.4s;
+}
+
+.but{
+  height: 36px;
+  margin-left: 20px;
+}
+
+.textBut{
+  font-family: 'Nunito', sans-serif;
+  font-style: bold;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 350px;
+  font-size: 36px;
+}
+
+.textBut:hover {
+  color: white;
+  background: rgb(196, 0, 0);
+  border-radius: 100px;
+  transition: 0.3s;
+}
 @media (max-height: 750px) {
   .button-18 {
     font-size: 80px;
@@ -112,6 +163,7 @@ body {
 
   }
   .buttons-wrapper img {
+
     width: 60px;
   }
   .of {
@@ -123,6 +175,8 @@ body {
   }
   .of a {
     width: 250px;
+    display: flex;
+    justify-content: center;
   }
   .button-18 {
     padding: 10px 30px;
@@ -130,6 +184,56 @@ body {
     border-radius: 100px;
     font-size: 50px;
   }
+
+  ul {
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+  }
+
+  li{
+    display: flex;
+    justify-content: center;
+    border-radius: 100px;
+    font-size: 50px;
+    /* margin: 25.5px; */
+    width: 250px;
+    height: 70px;
+    animation: pulse 1.2s infinite;
+    /* height: 99px; */
+    color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+    animation: pulse 1.2s infinite;
+    box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2) inset;
+    transition: 0.4s;
+  }
+  .textBut{
+    font-family: 'Nunito', sans-serif;
+    font-style: bold;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 350px;
+    font-size: 28px;
+  }
+
+  
+  .logo{
+position: relative;
+
+  }
+  
+  #text18{
+position: relative;
+      width: 350px;
+      font-size: 36px;
+  }
+
 }
 @media (max-width: 400px) {
   .buttons-wrapper img {

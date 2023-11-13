@@ -6,6 +6,7 @@ services:
     container_name: swfx-nginx
     user: root
     volumes:
+      - ../../twit:/etc/www/twit
       - ../../main:/etc/www/main
       - ../../ai:/etc/www/ai
       - ../../ph:/etc/www/ph
